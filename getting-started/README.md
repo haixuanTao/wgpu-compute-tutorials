@@ -211,7 +211,7 @@ Unmapping the result will allow you to reuse the buffer.
 ```
 
 ```bash
-RUST_LOG=info cargo run
+cargo run
 ```
 ```
 warning: unused manifest key: package.author
