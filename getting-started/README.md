@@ -1,10 +1,10 @@
 # GPU Computation in Rust with WGPU
 
-This post is a getting started on GPU computation in Rust with wgpu using WGSL. wgpu is a crate that enables you to run code on almost every GPU, as it can use either the Vulkan backend for Linux, DX12 for Windows, or Metal for Mac M1.
+This post is a bare minimal "getting started" for GPU computation in Rust with wgpu using WGSL. wgpu is a crate that enables you to run GPU code on many devices, as it can use Vulkan, DX12 and Metal.
 
 Big Kudos to the wgpu team for this great crate, the WGSL and WebGPU workgroup for their immense work.
 
-This tutorial is a step by step guide to compute cosine for many integers in parallel. 
+This tutorial is a step by step guide for computing cosine for many integers in parallel. 
 
 ## 0. Install a backend for wgpu to connect to
 
@@ -14,7 +14,7 @@ If you're on Windows, you should have DX12, and this will be your backend.
 
 On Mac, I haven't tried but, you should install Metal if it is not already installed.
 
-## 1. Declare some dependancies for later use
+## 1. Declare some dependencies
 
 
 ```toml
@@ -25,11 +25,11 @@ pollster = "0.2.4"
 
 - wgpu: send computation to the GPU
 - bytemuck: format from f32 to u8 and back.
-- pollster: Enable to wait promises within sync function.
+- pollster: Enable to wait for promises within sync function.
 
 ## 2. implement an async function 
 
-Wgpu do asynchronous calls to the gpu. So use an async function.
+Wgpu does asynchronous calls to the gpu. So use an async function.
 
 ```rust
 fn main() {
@@ -77,9 +77,9 @@ A buffer is what connects data from the CPU to the GPU. We are going to create o
     });
 ```
 
-- labels is the name of the buffer for the logs within the GPU computation for debugging.
-- contents is the data of the buffer. It has to be a `&[u8]` and you can convert `&[f32]` to `&[u8]` using bytemuck.
-- usage define the permission granted to the buffer.
+- label is the name of the buffer for the logs within the GPU computation for debugging.
+- contents are the data of the buffer. It has to be a `&[u8]` and you can convert `&[f32]` to `&[u8]` using bytemuck.
+- usage defines the permission granted to the buffer.
 
 You will need to add the following at the beginning of `main.rs`:
 
@@ -102,7 +102,7 @@ You can also create a buffer without initialising its data as follows with our o
 
 ## 5. Write a WGSL Shader
 
-Wgpu allow you to use `SPIR-V`, `GLSL`, `WGSL` shader language to write the program you want to run on the gpu.
+Wgpu allows you to use `SPIR-V`, `GLSL`, `WGSL` shader language to write the program you want to run on the gpu.
 
 I am going to use WGSL: 
 ```rust
@@ -128,7 +128,7 @@ fn main([[builtin(global_invocation_id)]] global_id: vec3<u32>) {
 
 In WGSL, you will need a Struct to parse the array of `u8` to make them an array of `f32`. You will also have to add the stride between each element of the array.  
 
-Each buffer is referened by a bind group index and a binding index. In my case, I want to associate `[[group(0), binding(0)]]` to buffer `x` and `[[group(0), binding(1)]]` to buffer `y`.
+Each buffer is referenced by a bind group index and a binding index. In my case, I want to associate `[[group(0), binding(0)]]` to buffer `x` and `[[group(0), binding(1)]]` to buffer `y`.
 
 ## 6. Create a Compute Pipeline and a bind group.
 
