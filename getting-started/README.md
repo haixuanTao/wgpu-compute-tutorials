@@ -1,10 +1,10 @@
 # GPU Computation in Rust with WGPU
 
-This post is a bare minimal "getting started" for GPU computation in Rust with wgpu using WGSL. wgpu is a crate that enables you to run GPU code on many devices, as it can use Vulkan, DX12 and Metal.
+This post is a bare minimal "getting started" for GPU computation in Rust with wgpu using WGSL.
+
+It is going to compute cosine for many integers in parallel. 
 
 Big Kudos to the wgpu team for this great crate, the WGSL and WebGPU workgroup for their immense work.
-
-This tutorial is a step by step guide for computing cosine for many integers in parallel. 
 
 ## 0. Install a backend for wgpu to connect to
 
