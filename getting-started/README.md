@@ -50,8 +50,8 @@ Create a connection using the following boilerplate within the async function:
         .request_adapter(&wgpu::RequestAdapterOptionsBase::default())
         .await
         .expect("No GPU Found for referenced preference");
-    
-		let (device, queue) = adapter
+
+	let (device, queue) = adapter
         .request_device(&wgpu::DeviceDescriptor::default(), None)
         .await
         .expect("Could not create adapter for GPU device");
@@ -63,7 +63,7 @@ Create a connection using the following boilerplate within the async function:
 
 ***You can try to compile the code at this point to check if your hardware is working fine. If not, check that the backend is well installed.***
 
-## 4. Create some data and send it to the GPU
+## 4. Create some data and transfer it to the GPU
 
 A buffer is what connects data from the CPU to the GPU. We are going to create one for our input `x`:
 
@@ -130,7 +130,7 @@ In WGSL, you will need a Struct to parse the array of `u8` to make them an array
 
 Each buffer is referenced by a bind group index and a binding index. In my case, I want to associate `[[group(0), binding(0)]]` to buffer `x` and `[[group(0), binding(1)]]` to buffer `y`.
 
-## 6. Create a Compute Pipeline and a bind group.
+## 6. Create a Compute Pipeline and a bind group
 
 ```rust
     let pipeline = device.create_compute_pipeline(&wgpu::ComputePipelineDescriptor {
@@ -161,7 +161,7 @@ Each buffer is referenced by a bind group index and a binding index. In my case,
 
 Create a compute pipeline from the shader and a bindgroup that is following the layout that we specified within the shader.
 
-## 6. Dispatch it to the GPU!
+## 6. Dispatch it to the GPU
 This boilerplate code will glue everything together and dispatch it to the gpu.
 
 ```rust
